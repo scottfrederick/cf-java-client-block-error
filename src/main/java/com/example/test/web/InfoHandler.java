@@ -25,7 +25,14 @@ public class InfoHandler {
 	}
 
 	@SuppressWarnings("unused")
-	public Mono<ServerResponse> spaces(ServerRequest request) {
+	public Mono<ServerResponse> listSpaces(ServerRequest request) {
+		return ServerResponse.ok()
+				.contentType(MediaType.TEXT_PLAIN)
+				.body(BodyInserters.fromPublisher(getSpaceNames(), String.class));
+	}
+
+	@SuppressWarnings("unused")
+	public Mono<ServerResponse> createAndListSpaces(ServerRequest request) {
 		return ServerResponse.ok()
 				.contentType(MediaType.TEXT_PLAIN)
 				.body(BodyInserters.fromPublisher(createSpace().then(getSpaceNames()), String.class));

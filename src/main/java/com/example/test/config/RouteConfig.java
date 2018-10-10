@@ -12,9 +12,11 @@ import org.springframework.web.reactive.function.server.ServerResponse;
 @Configuration
 public class RouteConfig {
 	@Bean
-	public RouterFunction<ServerResponse> route(InfoHandler greetingHandler) {
+	public RouterFunction<ServerResponse> route(InfoHandler infoHandler) {
 		return RouterFunctions
 				.route(RequestPredicates.GET("/spaces")
-						.and(RequestPredicates.accept(MediaType.TEXT_PLAIN)), greetingHandler::spaces);
+						.and(RequestPredicates.accept(MediaType.TEXT_PLAIN)), infoHandler::listSpaces)
+				.andRoute(RequestPredicates.PUT("/spaces")
+						.and(RequestPredicates.accept(MediaType.TEXT_PLAIN)), infoHandler::createAndListSpaces);
 	}
 }
