@@ -1,0 +1,7 @@
+cloudfoundry:
+  api-host: api.run.pivotal.io
+  api-port: 443
+  username: me@email.com
+  password: secret
+  default-org: me-org
+  default-space: development
