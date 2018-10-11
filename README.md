@@ -24,7 +24,7 @@ $ curl -X GET http://localhost:8080/orgs
 
 system,test
 
-$ curl -X PUT http://localhost:8080/orgs
+$ curl -X POST http://localhost:8080/orgs?name=new-org
 {
     "error": "Internal Server Error",
     "message": "block()/blockFirst()/blockLast() are blocking, which is not supported in thread reactor-http-nio-2",
@@ -36,7 +36,7 @@ $ curl -X GET http://localhost:8080/spaces
 
 development,staging,production
 
-$ curl -X PUT http://localhost:8080/spaces
+$ curl -X POST http://localhost:8080/spaces?name=new-space
 {
     "error": "Internal Server Error",
     "message": "block()/blockFirst()/blockLast() are blocking, which is not supported in thread reactor-http-nio-2",

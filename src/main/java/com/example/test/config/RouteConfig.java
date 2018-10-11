@@ -16,11 +16,11 @@ public class RouteConfig {
 		return RouterFunctions
 				.route(RequestPredicates.GET("/orgs")
 						.and(RequestPredicates.accept(MediaType.TEXT_PLAIN)), infoHandler::listOrgs)
-				.andRoute(RequestPredicates.PUT("/orgs")
+				.andRoute(RequestPredicates.POST("/orgs")
 						.and(RequestPredicates.accept(MediaType.TEXT_PLAIN)), infoHandler::createAndListOrgs)
 				.andRoute(RequestPredicates.GET("/spaces")
 						.and(RequestPredicates.accept(MediaType.TEXT_PLAIN)), infoHandler::listSpaces)
-				.andRoute(RequestPredicates.PUT("/spaces")
+				.andRoute(RequestPredicates.POST("/spaces")
 						.and(RequestPredicates.accept(MediaType.TEXT_PLAIN)), infoHandler::createAndListSpaces);
 	}
 }

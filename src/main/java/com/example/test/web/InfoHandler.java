@@ -37,7 +37,8 @@ public class InfoHandler {
 	public Mono<ServerResponse> createAndListOrgs(ServerRequest request) {
 		return ServerResponse.ok()
 				.contentType(MediaType.TEXT_PLAIN)
-				.body(BodyInserters.fromPublisher(createOrg().then(getOrgNames()), String.class));
+				.body(BodyInserters.fromPublisher(createOrg(getName(request))
+						.then(getOrgNames()), String.class));
 	}
 
 	@SuppressWarnings("unused")
@@ -51,13 +52,14 @@ public class InfoHandler {
 	public Mono<ServerResponse> createAndListSpaces(ServerRequest request) {
 		return ServerResponse.ok()
 				.contentType(MediaType.TEXT_PLAIN)
-				.body(BodyInserters.fromPublisher(createSpace().then(getSpaceNames()), String.class));
+				.body(BodyInserters.fromPublisher(createSpace(getName(request))
+						.then(getSpaceNames()), String.class));
 	}
 
-	private Mono<Void> createOrg() {
+	private Mono<Void> createOrg(String orgName) {
 		return this.operations.organizations()
 				.create(CreateOrganizationRequest.builder()
-						.organizationName(UUID.randomUUID().toString())
+						.organizationName(orgName)
 						.build());
 	}
 
@@ -69,10 +71,10 @@ public class InfoHandler {
 				.collect(Collectors.joining(","));
 	}
 
-	private Mono<Void> createSpace() {
+	private Mono<Void> createSpace(String spaceName) {
 		return this.operations.spaces()
 				.create(CreateSpaceRequest.builder()
-						.name(UUID.randomUUID().toString())
+						.name(spaceName)
 						.build());
 	}
 
@@ -82,5 +84,10 @@ public class InfoHandler {
 				.map(SpaceSummary::getName)
 				.doOnNext(spaceName -> log.info("found space '{}'", spaceName))
 				.collect(Collectors.joining(","));
+	}
+
+	private String getName(ServerRequest request) {
+		return request.queryParam("name")
+				.orElse(UUID.randomUUID().toString());
 	}
 }
