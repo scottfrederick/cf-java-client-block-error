@@ -20,6 +20,18 @@ $ ./gradlew bootRun
 ## Test the application
 
 ~~~
+$ curl -X GET http://localhost:8080/orgs
+
+system,test
+
+$ curl -X PUT http://localhost:8080/orgs
+{
+    "error": "Internal Server Error",
+    "message": "block()/blockFirst()/blockLast() are blocking, which is not supported in thread reactor-http-nio-2",
+    "path": "/orgs",
+    "status": 500,
+}
+
 $ curl -X GET http://localhost:8080/spaces
 
 development,staging,production

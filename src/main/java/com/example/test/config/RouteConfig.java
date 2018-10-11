@@ -14,7 +14,11 @@ public class RouteConfig {
 	@Bean
 	public RouterFunction<ServerResponse> route(InfoHandler infoHandler) {
 		return RouterFunctions
-				.route(RequestPredicates.GET("/spaces")
+				.route(RequestPredicates.GET("/orgs")
+						.and(RequestPredicates.accept(MediaType.TEXT_PLAIN)), infoHandler::listOrgs)
+				.andRoute(RequestPredicates.PUT("/orgs")
+						.and(RequestPredicates.accept(MediaType.TEXT_PLAIN)), infoHandler::createAndListOrgs)
+				.andRoute(RequestPredicates.GET("/spaces")
 						.and(RequestPredicates.accept(MediaType.TEXT_PLAIN)), infoHandler::listSpaces)
 				.andRoute(RequestPredicates.PUT("/spaces")
 						.and(RequestPredicates.accept(MediaType.TEXT_PLAIN)), infoHandler::createAndListSpaces);
